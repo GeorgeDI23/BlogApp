@@ -1,30 +1,34 @@
 package com.zipcode.gjblog.blogmodel;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import java.sql.Blob;
+import javax.persistence.*;
 
 @Entity
 public class PostContent {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JoinColumn
-    Integer post_Id;
+    private Long content_Id;
+
+    //Of mysql type 'text'
+    @Column
+    private String text;
 
     @Column
-    String text;
+    private String imageBucket;
 
-    //to check and change if it is s3
-    @Lob
-    private Blob data;
+    @Column
+    private String imageKey;
 
-    public Integer getPost_Id() {
-        return post_Id;
+    @Transient
+    private String imageData; // this holds the Base64 image data to be transmitted to front end
+
+    public Long getContent_Id() {
+        return content_Id;
     }
 
-    public void setPost_Id(Integer post_Id) {
-        this.post_Id = post_Id;
+    public void setContent_Id(Long content_Id) {
+        this.content_Id = content_Id;
     }
 
     public String getText() {
@@ -35,11 +39,28 @@ public class PostContent {
         this.text = text;
     }
 
-    public Blob getData() {
-        return data;
+    public String getImageBucket() {
+        return imageBucket;
     }
 
-    public void setData(Blob data) {
-        this.data = data;
+    public void setImageBucket(String imageBucket) {
+        this.imageBucket = imageBucket;
     }
+
+    public String getImageKey() {
+        return imageKey;
+    }
+
+    public void setImageKey(String imageKey) {
+        this.imageKey = imageKey;
+    }
+
+    public String getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(String imageData) {
+        this.imageData = imageData;
+    }
+
 }
