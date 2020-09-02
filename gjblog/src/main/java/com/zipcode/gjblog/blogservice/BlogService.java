@@ -5,6 +5,7 @@ import com.zipcode.gjblog.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,16 +25,26 @@ public class BlogService {
     public List<Post> getPosts(){
         ArrayList<Post> posts = new ArrayList<>();
         for(Post aPost : blogRepository.findAll()){
-            //ToDO update the transient image field here
-            //grab bucket and key from postcontent field, call s3Engine method, return Base64String, fill in transient field
-            //aPost.getContent().setImageData("BASE64 IMAGE DATA HERE");
+            if (!aPost.getContent().getImageKey().equals("")){
+                aPost.getContent().setImageData(s3EngineService.getS3ItemAsBase64(aPost.getContent().getImageKey()));
+            }
             posts.add(aPost);
         }
         return posts;
     }
 
     public Post postPost(Post aPost){
-        //ToDo when recieving post, send to S3 and get reference values before saving to DB
+        if(aPost.getContent().getImageData() != ""){
+            String imageKey = createUniqueKey(aPost);
+            s3EngineService.insertBase64IntoS3Bucket(imageKey, aPost.getContent().getImageData());
+            aPost.getContent().setImageKey(imageKey);
+        }
         return blogRepository.save(aPost);
+    }
+
+    public String createUniqueKey(Post aPost){
+        String unixTime = String.valueOf(Instant.now().getEpochSecond());
+        String postHash = String.valueOf(aPost.hashCode());
+        return postHash.concat(unixTime);
     }
 }

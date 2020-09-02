@@ -14,7 +14,6 @@ import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 @Service
 public class S3EngineService {
 
@@ -42,7 +41,8 @@ public class S3EngineService {
 
     public String getS3ItemAsBase64(String imageKey){
         try {
-            S3Object s3object = this.s3client.getObject(this.s3Bucket, imageKey);
+            String key = "Image/"+imageKey+".jpg";
+            S3Object s3object = this.s3client.getObject(this.s3Bucket, key);
             return convertS3ObjectToBase64(s3object);
         } catch (Exception e){
             Logger.getLogger("getS3ItemAsBase64").log(Level.WARNING,e.toString());
