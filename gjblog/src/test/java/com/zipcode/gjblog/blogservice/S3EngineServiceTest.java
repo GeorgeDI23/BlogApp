@@ -4,10 +4,8 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.AnonymousAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import io.findify.s3mock.S3Mock;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -15,10 +13,10 @@ import static org.junit.Assert.*;
 
 public class S3EngineServiceTest {
 
-    S3EngineService s3;
+    public static S3EngineService s3;
 
-    @Before//Class
-    public void setUp(){
+    @BeforeClass
+    public static void setUp(){
         //MIT License
         S3Mock api = new S3Mock.Builder().withPort(8004).withInMemoryBackend().build();
         api.start();
@@ -34,9 +32,9 @@ public class S3EngineServiceTest {
 
 
         //Default test items
-        amazonS3.createBucket("testbucket");
-        s3 = new S3EngineService(amazonS3, "testbucket");
-        amazonS3.putObject("testbucket", "keyName", "contents");
+        amazonS3.createBucket("test2bucket");
+        s3 = new S3EngineService(amazonS3, "test2bucket");
+        amazonS3.putObject("test2bucket", "Image/keyName.jpg", "contents");
     }
 
     @Test
@@ -46,7 +44,7 @@ public class S3EngineServiceTest {
 
         //When
         s3.insertBase64IntoS3Bucket("test", expected);
-        String actual = s3.getS3ItemAsBase64("Image/test.jpg");
+        String actual = s3.getS3ItemAsBase64("test");
 
         //Then
         assertEquals(expected, actual);
@@ -62,6 +60,6 @@ public class S3EngineServiceTest {
         String actual = s3.getS3ItemAsBase64(defaultKey);
 
         //Then
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 }
