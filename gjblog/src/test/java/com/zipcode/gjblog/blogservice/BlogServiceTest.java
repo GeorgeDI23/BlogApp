@@ -3,7 +3,6 @@ package com.zipcode.gjblog.blogservice;
 import com.zipcode.gjblog.blogmodel.Post;
 import com.zipcode.gjblog.blogmodel.PostContent;
 import com.zipcode.gjblog.repository.BlogRepository;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.mockito.Mockito.*;
@@ -27,46 +26,42 @@ public class BlogServiceTest {
     @InjectMocks
     BlogService blogService;
 
-    //@Before
-    //public void setUp() throws Exception {
-    //}
 
     @Test
     public void getPostsTest1() {
-        //Verify calls to DB
         //Given
         when(blogRepository.findAll()).thenReturn(stubPosts());
 
         //When
-        blogService.getPosts();
+        blogService.getAllBlog();
 
         //Then
         verify(blogRepository, times(1)).findAll();
     }
 
     @Test
-    public void getPostsTest2() {
+    public void getAllBlogTest2() {
         //Given
         String expected = "TEST";
         when(blogRepository.findAll()).thenReturn(stubPosts());
         when(s3EngineService.getS3ItemAsBase64(anyString())).thenReturn(expected);
 
         //When
-        String actual = blogService.getPosts().get(0).getContent().getImageData();
+        String actual = blogService.getAllBlog().get(0).getPostContent().getImageData();
 
         //Then
         assertEquals(expected, actual);
     }
 
     @Test
-    public void getPostsTest3() {
+    public void getAllBlogTest3() {
         //Given
         String expected = "TEST";
         when(blogRepository.findAll()).thenReturn(stubPosts());
         when(s3EngineService.getS3ItemAsBase64(anyString())).thenReturn(expected);
 
         //When
-        blogService.getPosts();
+        blogService.getAllBlog();
 
         //Then
         verify(s3EngineService, times(1)).getS3ItemAsBase64(anyString());
@@ -76,59 +71,59 @@ public class BlogServiceTest {
         Post post1 = new Post();
         PostContent pc1 = new PostContent();
         pc1.setImageKey("TEST");
-        post1.setContent(pc1);
+        post1.setPostContent(pc1);
 
         Post post2 = new Post();
         PostContent pc2 = new PostContent();
         pc2.setImageKey("");
-        post2.setContent(pc2);
+        post2.setPostContent(pc2);
 
         return Arrays.asList(post1, post2);
     }
 
     @Test
-    public void postPostTest1(){
+    public void postBlogTest1(){
         //Given
         Post aPost = new Post();
         PostContent pc = new PostContent();
         pc.setImageData("");
-        aPost.setContent(pc);
+        aPost.setPostContent(pc);
         when(blogRepository.save(aPost)).thenReturn(aPost);
 
         //When
-        blogService.postPost(aPost);
+        blogService.postBlog(aPost);
 
         //Then
         verify(s3EngineService, times(0)).insertBase64IntoS3Bucket(anyString(), anyString());
     }
 
     @Test
-    public void postPostTest2(){
+    public void postBlogTest2(){
         //Given
         Post aPost = new Post();
         PostContent pc = new PostContent();
         pc.setImageData("");
-        aPost.setContent(pc);
+        aPost.setPostContent(pc);
         when(blogRepository.save(aPost)).thenReturn(aPost);
 
         //When
-        blogService.postPost(aPost);
+        blogService.postBlog(aPost);
 
         //Then
         verify(blogRepository, times(1)).save(any(Post.class));
     }
 
     @Test
-    public void postPostTest3(){
+    public void postBlogTest3(){
         //Given
         Post aPost = new Post();
         PostContent pc = new PostContent();
         pc.setImageData("test");
-        aPost.setContent(pc);
+        aPost.setPostContent(pc);
         when(blogRepository.save(aPost)).thenReturn(aPost);
 
         //When
-        blogService.postPost(aPost);
+        blogService.postBlog(aPost);
 
         //Then
         verify(s3EngineService, times(1)).insertBase64IntoS3Bucket(anyString(), anyString());

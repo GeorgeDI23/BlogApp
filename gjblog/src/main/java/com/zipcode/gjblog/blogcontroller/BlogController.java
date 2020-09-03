@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Controller
-@RequestMapping
+@RequestMapping("/blog")
 public class BlogController {
 
     BlogService blogService;
@@ -23,21 +23,33 @@ public class BlogController {
         this.blogService = blogService;
     }
 
-    @GetMapping("/")
+    @PostMapping("/new")
+    public @ResponseBody
+    Post createBlog(@RequestBody Post request){
+        return blogService.postBlog(request);
+    }
+
+    /* To be Updated
+    @GetMapping("/{id}")
+    public @ResponseBody
+    PostContent displayBlog(@PathVariable long id){
+        return blogService.getBlog(id);
+    }*/
+
+    @GetMapping("/tag")
+    public @ResponseBody
+    List <Post> displayBlogByTag(@RequestParam(name = "tag") String searchTag){
+        return blogService.getBlogByTag(searchTag);
+    }
+
+    @GetMapping("/all")
     public @ResponseBody
     List<Post> getPosts(){
         try{
-            return blogService.getPosts();
+            return blogService.getAllBlog();
         } catch (Exception e){
             Logger.getLogger("Controller-getPosts").log(Level.WARNING,e.toString());
             return new ArrayList<Post>();
         }
     }
-
-    @PostMapping("/createPost")
-    public @ResponseBody
-    Post postPost(@RequestBody Post aPost){
-        return blogService.postPost(aPost);
-    }
-
 }

@@ -39,18 +39,11 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Using H2 for first phase of design -->
-		<!--<dependency>
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
-		</dependency> -->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
 		</dependency>
-		<!-- TODO Dont forget to update prior to switching to MySQL -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

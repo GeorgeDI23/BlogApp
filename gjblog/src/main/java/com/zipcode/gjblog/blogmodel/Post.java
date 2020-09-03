@@ -1,25 +1,33 @@
 package com.zipcode.gjblog.blogmodel;
 
-import javax.persistence.Id;
-
 import javax.persistence.*;
 
 @Entity
+@Table(name = "POST")
 public class Post {
 
     @Id
+    @Column(name = "post_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long post_Id;
 
-    @Column
+    @Column(name = "user_name")
     private String userName;
 
-    @Column
+    @Column(name = "tag")
     private String tag;
 
     @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "content_Id")
-    private PostContent content;
+    @JoinColumn(name = "post_content_id")
+    private PostContent postContent;
+
+    public PostContent getPostContent() {
+        return postContent;
+    }
+
+    public void setPostContent(PostContent postContent) {
+        this.postContent = postContent;
+    }
 
     public Long getPost_Id() {
         return post_Id;
@@ -43,13 +51,5 @@ public class Post {
 
     public void setTag(String tag) {
         this.tag = tag;
-    }
-
-    public PostContent getContent() {
-        return content;
-    }
-
-    public void setContent(PostContent content) {
-        this.content = content;
     }
 }

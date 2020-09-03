@@ -3,48 +3,37 @@ package com.zipcode.gjblog.blogmodel;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "POSTCONTENT")
 public class PostContent {
 
     @Id
+    @Column(name="post_content_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JoinColumn
-    private Long content_Id;
+    private Long postContentId;
 
-    //Of mysql type 'text'
-    @Column
-    private String text;
+    @Column(name="text_input")
+    private String textInput;
 
-    @Column
-    private String imageBucket;
-
-    @Column
+    @Column(name="image_key")
     private String imageKey;
 
     @Transient
     private String imageData; // this holds the Base64 image data to be transmitted to front end
 
-    public Long getContent_Id() {
-        return content_Id;
+    public Long getPostContentId() {
+        return postContentId;
     }
 
-    public void setContent_Id(Long content_Id) {
-        this.content_Id = content_Id;
+    public void setPostContentId(Long postContentId) {
+        this.postContentId = postContentId;
     }
 
     public String getText() {
-        return text;
+        return textInput;
     }
 
     public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getImageBucket() {
-        return imageBucket;
-    }
-
-    public void setImageBucket(String imageBucket) {
-        this.imageBucket = imageBucket;
+        this.textInput = text;
     }
 
     public String getImageKey() {
@@ -62,5 +51,4 @@ public class PostContent {
     public void setImageData(String imageData) {
         this.imageData = imageData;
     }
-
 }
