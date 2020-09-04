@@ -36,7 +36,14 @@ public class BlogService {
     }*/
 
     public List<Post> getBlogByTag(String tag) {
-        return blogRepository.findByTag(tag);
+        ArrayList<Post> posts = new ArrayList<>();
+        for(Post aPost : blogRepository.findByTag(tag)){
+            if (!aPost.getPostContent().getImageKey().equals("")){
+                aPost.getPostContent().setImageData(s3EngineService.getS3ItemAsBase64(aPost.getPostContent().getImageKey()));
+            }
+            posts.add(aPost);
+        }
+        return posts;
     }
 
     public List<Post> getAllBlog(){
