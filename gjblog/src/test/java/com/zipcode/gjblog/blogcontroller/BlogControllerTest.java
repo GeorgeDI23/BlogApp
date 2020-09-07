@@ -102,4 +102,16 @@ public class BlogControllerTest {
         Assert.assertEquals(HttpStatus.OK.value(),response.getStatus());
 
     }
+
+    @Test
+    public void getPostsByUserName() throws Exception {
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/blog/username")
+                .contentType(MediaType.APPLICATION_JSON).param("user_name","George")
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse response = result.getResponse();
+
+        Assert.assertEquals(HttpStatus.OK.value(),response.getStatus());
+    }
 }

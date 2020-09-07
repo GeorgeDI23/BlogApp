@@ -52,4 +52,16 @@ public class BlogController {
             return new ArrayList<Post>();
         }
     }
+
+    @GetMapping("/username")
+    public @ResponseBody
+    List<Post> getPostsByUserName(@RequestParam(name = "user_name") String userName){
+        try{
+            return blogService.getAllBlogByUser(userName);
+        } catch (Exception e){
+            Logger.getLogger("Controller - getPostsByUserName").log(Level.WARNING,e.toString());
+            return new ArrayList<Post>();
+        }
+    }
+
 }
