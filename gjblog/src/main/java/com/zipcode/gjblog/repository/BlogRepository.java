@@ -11,4 +11,5 @@ public interface BlogRepository extends CrudRepository<Post,Long> {
 
     List<Post> findByTag(String tag);
 
+    List<Post> findByUserName(String userName);
 }

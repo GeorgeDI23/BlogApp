@@ -3,6 +3,7 @@ package com.zipcode.gjblog.blogservice;
 import com.zipcode.gjblog.blogmodel.Post;
 import com.zipcode.gjblog.blogmodel.PostContent;
 import com.zipcode.gjblog.repository.BlogRepository;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.mockito.Mockito.*;
@@ -72,11 +73,13 @@ public class BlogServiceTest {
         PostContent pc1 = new PostContent();
         pc1.setImageKey("TEST");
         post1.setPostContent(pc1);
+        post1.setUserName("George");
 
         Post post2 = new Post();
         PostContent pc2 = new PostContent();
         pc2.setImageKey("");
         post2.setPostContent(pc2);
+        post2.setUserName("jyothi");
 
         return Arrays.asList(post1, post2);
     }
@@ -127,5 +130,25 @@ public class BlogServiceTest {
 
         //Then
         verify(s3EngineService, times(1)).insertBase64IntoS3Bucket(anyString(), anyString());
+    }
+
+    @Test
+    public void getAllBlogByUser(){
+        String username = "George";
+        String expected = "TEST";
+        when(blogRepository.findByUserName(username)).thenReturn(stubPosts());
+        when(s3EngineService.getS3ItemAsBase64(anyString())).thenReturn(expected);
+
+        blogService.getAllBlogByUser(username);
+
+        verify(s3EngineService, times(1)).getS3ItemAsBase64(anyString());
+
+        String actual = blogService.getAllBlogByUser(username).get(0).getPostContent().getImageData();
+
+        assertEquals(expected,actual);
+
+
+
+
     }
 }
