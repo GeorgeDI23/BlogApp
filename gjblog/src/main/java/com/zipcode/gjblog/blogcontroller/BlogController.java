@@ -4,6 +4,7 @@ import com.zipcode.gjblog.blogmodel.Post;
 import com.zipcode.gjblog.blogservice.BlogService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@EnableOAuth2Sso
 @Controller
 @RequestMapping("/blog")
 public class BlogController {
