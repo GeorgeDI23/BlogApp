@@ -4,7 +4,7 @@ import com.zipcode.gjblog.blogmodel.Post;
 import com.zipcode.gjblog.blogservice.BlogService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
+//import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,10 +26,17 @@ public class BlogController {
 
     @PostMapping("/new")
     public @ResponseBody
-    Post createBlog(@RequestBody Post request){
+    Post createAnonymousBlog(@RequestBody Post request){
+        request.setUserName("Anonymous");
         return blogService.postBlog(request);
     }
-
+/*
+    @PostMapping("/login")
+    public @ResponseBody
+    String createBlog(@RequestBody String token){
+        return token;
+    }
+*/
     /* To be Updated
     @GetMapping("/{id}")
     public @ResponseBody

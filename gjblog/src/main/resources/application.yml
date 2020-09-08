@@ -1,0 +1,12 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            client-id: 0oawinwq47yHuoPsI4x6
+            client-secret: 7j7Y05eNFazOwo91-2I3g659qSwm4WvmAXir_EHD
+            client-name: Okta
+          provider:
+            okta:
+              issuer-uri: https://dev-750173.okta.com/oauth2/default

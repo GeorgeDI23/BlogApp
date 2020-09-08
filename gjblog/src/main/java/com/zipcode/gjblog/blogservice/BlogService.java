@@ -30,10 +30,6 @@ public class BlogService {
         return blogRepository.save(request);
     }
 
-    /*
-    public PostContent getBlog(long id) {
-        return contentRepository.findById(id).get();
-    }*/
 
     public List<Post> getBlogByTag(String tag) {
         ArrayList<Post> posts = new ArrayList<>();
