@@ -29,13 +29,6 @@ public class BlogController {
         return blogService.postBlog(request);
     }
 
-    /* To be Updated
-    @GetMapping("/{id}")
-    public @ResponseBody
-    PostContent displayBlog(@PathVariable long id){
-        return blogService.getBlog(id);
-    }*/
-
     @GetMapping("/tag")
     public @ResponseBody
     List <Post> displayBlogByTag(@RequestParam(name = "tag") String searchTag){
