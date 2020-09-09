@@ -4,9 +4,9 @@ spring:
       client:
         registration:
           okta:
-            client-id: 0oawinwq47yHuoPsI4x6
-            client-secret: 7j7Y05eNFazOwo91-2I3g659qSwm4WvmAXir_EHD
+            client-id: 0oawt2el4dBOKfknp4x6
+            client-secret: ZWXgnMk1B21gRVFjOSS44ZDqiK_TR5O_1jTXCI9c
             client-name: Okta
           provider:
             okta:
-              issuer-uri: https://dev-750173.okta.com/oauth2/default
+              issuer-uri: https://dev-176965.okta.com/oauth2/default
