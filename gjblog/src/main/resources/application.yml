@@ -1,0 +1,12 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            client-id: ${OKTA_ID}
+            client-secret: ${OKTA_SECRET}
+            client-name: Okta
+          provider:
+            okta:
+              issuer-uri: ${OKTA_URI}

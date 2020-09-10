@@ -4,6 +4,8 @@ import com.zipcode.gjblog.blogmodel.Post;
 import com.zipcode.gjblog.blogservice.BlogService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/blog")
 public class BlogController {
 
@@ -25,7 +28,15 @@ public class BlogController {
 
     @PostMapping("/new")
     public @ResponseBody
-    Post createBlog(@RequestBody Post request){
+    Post createAnonymousBlog(@RequestBody Post request){
+        request.setUserName("Anonymous");
+        return blogService.postBlog(request);
+    }
+
+    @PostMapping("/authenticatedNew")
+    public @ResponseBody
+    Post createBlog(@RequestBody Post request, @AuthenticationPrincipal OidcUser user){
+        request.setUserName(user.getFullName());
         return blogService.postBlog(request);
     }
 
@@ -45,16 +56,4 @@ public class BlogController {
             return new ArrayList<Post>();
         }
     }
-
-    @GetMapping("/username")
-    public @ResponseBody
-    List<Post> getPostsByUserName(@RequestParam(name = "user_name") String userName){
-        try{
-            return blogService.getAllBlogByUser(userName);
-        } catch (Exception e){
-            Logger.getLogger("Controller - getPostsByUserName").log(Level.WARNING,e.toString());
-            return new ArrayList<Post>();
-        }
-    }
-
 }

@@ -30,6 +30,7 @@ public class BlogService {
         return blogRepository.save(request);
     }
 
+
     public List<Post> getBlogByTag(String tag) {
         ArrayList<Post> posts = new ArrayList<>();
         for(Post aPost : blogRepository.findByTag(tag)){
@@ -56,16 +57,5 @@ public class BlogService {
         String unixTime = String.valueOf(Instant.now().getEpochSecond());
         String postHash = String.valueOf(aPost.hashCode());
         return postHash.concat(unixTime);
-    }
-
-    public List<Post> getAllBlogByUser(String userName) {
-        List<Post> allPostByUser = new ArrayList<>();
-        for(Post aPost : blogRepository.findByUserName(userName)){
-            if (!aPost.getPostContent().getImageKey().equals("")){
-                aPost.getPostContent().setImageData(s3EngineService.getS3ItemAsBase64(aPost.getPostContent().getImageKey()));
-            }
-            allPostByUser.add(aPost);
-        }
-        return allPostByUser;
     }
 }
