@@ -68,7 +68,7 @@ public class BlogControllerTest {
 
 
     @Test
-    public void createBlogTest() throws Exception {
+    public void createAnonymousBlogTest() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/blog/new")
                 .contentType(MediaType.APPLICATION_JSON).content(blogRequest)
                 .accept(MediaType.APPLICATION_JSON);
