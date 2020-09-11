@@ -4,6 +4,7 @@ import com.zipcode.gjblog.blogmodel.Post;
 import com.zipcode.gjblog.blogservice.BlogService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
@@ -29,21 +30,37 @@ public class BlogController {
     @PostMapping("/new")
     public @ResponseBody
     Post createAnonymousBlog(@RequestBody Post request){
-        request.setUserName("Anonymous");
-        return blogService.postBlog(request);
+        try{
+            request.setUserName("Anonymous");
+            return blogService.postBlog(request);
+        } catch(Exception e){
+            Logger.getLogger("BlogController - new anonymousPost").log(Level.WARNING,e.toString());
+            return null;
+        }
     }
 
     @PostMapping("/authenticatedNew")
     public @ResponseBody
     Post createBlog(@RequestBody Post request, @AuthenticationPrincipal OidcUser user){
-        request.setUserName(user.getFullName());
-        return blogService.postBlog(request);
+        try{
+            request.setUserName(user.getFullName());
+            return blogService.postBlog(request);
+        }catch(Exception e){
+            Logger.getLogger("BlogController - new").log(Level.WARNING,e.toString());
+            return null;
+        }
+
     }
 
     @GetMapping("/tag")
     public @ResponseBody
     List <Post> displayBlogByTag(@RequestParam(name = "tag") String searchTag){
-        return blogService.getBlogByTag(searchTag);
+        try{
+            return blogService.getBlogByTag(searchTag);
+        }catch(Exception e){
+            Logger.getLogger("Controller-tag").log(Level.WARNING,e.toString());
+            return null;
+        }
     }
 
     @GetMapping("/all")
