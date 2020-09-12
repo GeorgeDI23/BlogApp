@@ -1,5 +1,7 @@
 package com.zipcode.gjblog.blogmodel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -20,6 +22,10 @@ public class Post {
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "post_content_id")
     private PostContent postContent;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "post")
+    private Profile profile;
 
     public PostContent getPostContent() {
         return postContent;

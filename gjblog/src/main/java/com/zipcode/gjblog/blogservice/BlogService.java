@@ -1,7 +1,9 @@
 package com.zipcode.gjblog.blogservice;
 
 import com.zipcode.gjblog.blogmodel.Post;
+import com.zipcode.gjblog.blogmodel.Profile;
 import com.zipcode.gjblog.repository.BlogRepository;
+import com.zipcode.gjblog.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import java.util.List;
 public class BlogService {
 
     BlogRepository blogRepository;
+    ProfileRepository profileRepository;
     S3EngineService s3EngineService;
 
     @Autowired
@@ -53,9 +56,19 @@ public class BlogService {
         return posts;
     }
 
-    public String createUniqueKey(Post aPost){
+    public <T> String createUniqueKey(T aPost){
         String unixTime = String.valueOf(Instant.now().getEpochSecond());
         String postHash = String.valueOf(aPost.hashCode());
         return postHash.concat(unixTime);
+    }
+
+
+    public Profile createProfile(Profile profile) {
+        if(profile.getProfileImageData() != ""){
+            String profileImageKey = createUniqueKey(profile);
+            s3EngineService.insertBase64IntoS3Bucket(profileImageKey, profile.getProfileImageData());
+            profile.setProfileImageKey(profileImageKey);
+        }
+        return profileRepository.save(profile);
     }
 }
