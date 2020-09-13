@@ -4,30 +4,32 @@ package com.zipcode.gjblog.blogmodel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table
+@Table(name = "PROFILE")
 public class Profile {
-
-    @JsonIgnore
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "user_name", referencedColumnName = "user_name")
-    private Post post;
 
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
+    @Column(name = "profile_id")
     private Long profileId;
 
-    @Column
+    @NotBlank(message = "userName is required")
+    @Column(name = "user_name")
+    private String userName;
+
+    @NotBlank(message = "firstName is required")
+    @Column(name = "first_name")
     String firstName;
 
-    @Column
+    @NotBlank(message = "lastName is required")
+    @Column(name = "last_name")
     String lastName;
 
     @JsonIgnore
-    @Column
+    @Column(name = "profile_img_key")
     String profileImageKey;
 
     @Transient
@@ -41,20 +43,20 @@ public class Profile {
         this.profileImageData = profileImageData;
     }
 
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
     public Long getProfileId() {
         return profileId;
     }
 
     public void setProfileId(Long profileId) {
         this.profileId = profileId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getFirstName() {

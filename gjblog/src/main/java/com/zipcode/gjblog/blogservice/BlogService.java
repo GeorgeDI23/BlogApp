@@ -5,6 +5,7 @@ import com.zipcode.gjblog.blogmodel.Profile;
 import com.zipcode.gjblog.repository.BlogRepository;
 import com.zipcode.gjblog.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -19,9 +20,11 @@ public class BlogService {
     S3EngineService s3EngineService;
 
     @Autowired
-    public BlogService(BlogRepository blogRepository, S3EngineService s3EngineService) {
+    public BlogService(BlogRepository blogRepository, S3EngineService s3EngineService,ProfileRepository profileRepository) {
         this.blogRepository = blogRepository;
         this.s3EngineService = s3EngineService;
+        this.profileRepository = profileRepository;
+
     }
 
     public Post postBlog(Post request){
@@ -70,5 +73,17 @@ public class BlogService {
             profile.setProfileImageKey(profileImageKey);
         }
         return profileRepository.save(profile);
+    }
+
+    public Profile displayProfile(String username) {
+        Profile responseProfile = null;
+
+        if(username != null){
+             responseProfile = profileRepository.findByUserName(username);
+            if(responseProfile.getProfileImageKey() != null){
+                responseProfile.setProfileImageData(s3EngineService.getS3ItemAsBase64(responseProfile.getProfileImageKey()));
+            }
+        }
+        return responseProfile;
     }
 }
