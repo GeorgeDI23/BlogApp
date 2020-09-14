@@ -41,7 +41,7 @@ public class BlogService {
         ArrayList<Post> posts = new ArrayList<>();
         for(Post aPost : blogRepository.findByTag(tag)){
             if (!aPost.getPostContent().getImageKey().equals("")){
-                aPost.getPostContent().setImageData(s3EngineService.getS3ItemAsBase64(aPost.getPostContent().getImageKey()));
+                aPost.getPostContent().setImageData("data:image/jpg;base64,"+s3EngineService.getS3ItemAsBase64(aPost.getPostContent().getImageKey()));
             }
             posts.add(aPost);
         }
@@ -52,7 +52,7 @@ public class BlogService {
         ArrayList<Post> posts = new ArrayList<>();
         for(Post aPost : blogRepository.findAll()){
             if (!aPost.getPostContent().getImageKey().equals("")){
-                aPost.getPostContent().setImageData(s3EngineService.getS3ItemAsBase64(aPost.getPostContent().getImageKey()));
+                aPost.getPostContent().setImageData("data:image/jpg;base64,"+s3EngineService.getS3ItemAsBase64(aPost.getPostContent().getImageKey()));
             }
             posts.add(aPost);
         }
@@ -81,7 +81,7 @@ public class BlogService {
         if(username != null){
              responseProfile = profileRepository.findByUserName(username);
             if(responseProfile.getProfileImageKey() != null){
-                responseProfile.setProfileImageData(s3EngineService.getS3ItemAsBase64(responseProfile.getProfileImageKey()));
+                responseProfile.setProfileImageData("data:image/jpg;base64,"+s3EngineService.getS3ItemAsBase64(responseProfile.getProfileImageKey()));
             }
         }
         return responseProfile;

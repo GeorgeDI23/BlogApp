@@ -43,9 +43,9 @@ public class BlogServiceTest {
     @Test
     public void getAllBlogTest2() {
         //Given
-        String expected = "TEST";
+        String expected = "data:image/jpg;base64,TEST";
         when(blogRepository.findAll()).thenReturn(stubPosts());
-        when(s3EngineService.getS3ItemAsBase64(anyString())).thenReturn(expected);
+        when(s3EngineService.getS3ItemAsBase64(anyString())).thenReturn("TEST");
 
         //When
         String actual = blogService.getAllBlog().get(0).getPostContent().getImageData();
