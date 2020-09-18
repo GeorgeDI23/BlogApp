@@ -1,12 +1,6 @@
 spring:
   security:
     oauth2:
-      client:
-        registration:
-          okta:
-            client-id: ${OKTA_ID}
-            client-secret: ${OKTA_SECRET}
-            client-name: Okta
-          provider:
-            okta:
-              issuer-uri: ${OKTA_URI}
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://dev-176965.okta.com/oauth2/default/v1/keys

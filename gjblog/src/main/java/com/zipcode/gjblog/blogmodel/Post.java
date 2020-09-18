@@ -1,6 +1,9 @@
 package com.zipcode.gjblog.blogmodel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "POST")
