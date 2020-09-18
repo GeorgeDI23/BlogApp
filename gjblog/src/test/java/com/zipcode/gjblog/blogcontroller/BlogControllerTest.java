@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -51,6 +52,16 @@ public class BlogControllerTest {
             "    }\n" +
             "}";
 
+    private static final String profileRequest ="{\n" +
+            "    \"firstName\":\"\",\n" +
+            "    \"lastName\":\"V\",\n" +
+            "    \"userName\":\"jo\"}";
+
+    private static final String profileCorrectRequest ="{\n" +
+            "    \"firstName\":\"Joe\",\n" +
+            "    \"lastName\":\"V\",\n" +
+            "    \"userName\":\"jo\"}";
+
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
@@ -75,7 +86,7 @@ public class BlogControllerTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        Assert.assertEquals(HttpStatus.OK.value(),response.getStatus());
+        Assert.assertEquals(HttpStatus.CREATED.value(),response.getStatus());
     }
 
     @Test
@@ -104,14 +115,36 @@ public class BlogControllerTest {
     }
 
     @Test
-    public void getPostsByUserName() throws Exception {
+    public void getProfileByUserName() throws Exception {
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/blog/username")
-                .contentType(MediaType.APPLICATION_JSON).param("user_name","George")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/blog/profile/{username}", "George")
+                .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
         Assert.assertEquals(HttpStatus.OK.value(),response.getStatus());
+    }
+
+    @Test
+    public void createProfileTest_BadReq() throws Exception {
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/blog/profile")
+                .contentType(MediaType.APPLICATION_JSON).content(profileRequest)
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse response = result.getResponse();
+
+        Assert.assertEquals(HttpStatus.BAD_REQUEST.value(),response.getStatus());
+    }
+
+    @Test
+    public void createProfileTest() throws Exception {
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/blog/profile")
+                .contentType(MediaType.APPLICATION_JSON).content(profileCorrectRequest)
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse response = result.getResponse();
+
+        Assert.assertEquals(HttpStatus.CREATED.value(),response.getStatus());
     }
 }
