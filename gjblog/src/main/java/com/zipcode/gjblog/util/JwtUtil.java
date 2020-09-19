@@ -3,9 +3,12 @@ package com.zipcode.gjblog.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +17,17 @@ import java.util.function.Function;
 @Service
 public class JwtUtil {
 
-    private String SECRET_KEY = "secret";
+    // TODO - change and store secret key in env var
+    private final String SECRET_KEY = "secret";
+    private final PasswordEncoder passwordEncoder;
+    SecureRandom secureRandom;
+
+
+    @Autowired
+    public JwtUtil(PasswordEncoder passwordEncoder) {
+        this.secureRandom = new SecureRandom();
+        this.passwordEncoder = passwordEncoder;
+    }
 
     // Returns username from token
     public String extractUsername(String token) {
@@ -34,7 +47,6 @@ public class JwtUtil {
     private Claims extractAllClaims(String token) {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
-
 
     // Validates not expired yet
     private Boolean isTokenExpired(String token) {
@@ -60,4 +72,8 @@ public class JwtUtil {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
+    // Hashes password for token
+    public String hashPassword(String password)  {
+        return passwordEncoder.encode(password);
+    }
 }

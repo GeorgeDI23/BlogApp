@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -66,8 +65,8 @@ public class BlogController {
 
     @PostMapping("/authenticatedNew")
     public @ResponseBody
-    ResponseEntity<Post> createBlog(@RequestBody Post request){//}, @AuthenticationPrincipal OidcUser user){
-        // ToDo - Get user from JWT vs OIDC and then inject into post
+    ResponseEntity<Post> createBlog(@RequestBody Post request, @RequestHeader("Authorization") String authToken){
+        request.setUserName(jwtTokenUtil.extractUsername(authToken));
         Post response = null;
         try{
             logger.info("Entered into BlogController::createBlog()");
@@ -153,18 +152,37 @@ public class BlogController {
     }
 
     @PostMapping(value = "/authenticate")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest){
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
             );
         }
         catch (BadCredentialsException bce) {
-            // ToDo perhaps return a response entity that indicates issue here instead of just exception
-            throw new Exception("Incorrect username or password", bce);
+            logger.error("Incorrect username or password", bce.fillInStackTrace());
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
         // Below parses and creates jwt then sends back
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        final String jwt = jwtTokenUtil.generateToken(userDetails);
+        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+    }
+
+    @PostMapping(value = "/register")
+    public ResponseEntity<?> registerNewUser(@RequestBody AuthenticationRequest newAuthenticationRequest){
+        try {
+            String password = jwtTokenUtil.hashPassword(newAuthenticationRequest.getPassword());
+            blogService.createAuthenticationProfile(newAuthenticationRequest.getUsername(), password);
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(newAuthenticationRequest.getUsername(), newAuthenticationRequest.getPassword())
+            );
+        }
+        catch (Exception e){
+            logger.error("Incorrect username or password", e.fillInStackTrace());
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        // Below parses and creates jwt then sends back
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(newAuthenticationRequest.getUsername());
         final String jwt = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }

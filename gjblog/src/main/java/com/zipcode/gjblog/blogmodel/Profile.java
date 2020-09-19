@@ -28,6 +28,10 @@ public class Profile {
     @Column(name = "last_name")
     String lastName;
 
+    @NotBlank(message = "authentication password is required")
+    @Column(name = "password")
+    String password;
+
     @JsonIgnore
     @Column(name = "profile_img_key")
     String profileImageKey;
@@ -73,6 +77,14 @@ public class Profile {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getProfileImageKey() {

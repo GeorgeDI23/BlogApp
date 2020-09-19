@@ -87,4 +87,14 @@ public class BlogService {
         }
         return responseProfile;
     }
+
+    public Profile createAuthenticationProfile(String userName, String password){
+        Profile profile = new Profile();
+        profile.setUserName(userName);
+        profile.setPassword(password);
+        profile.setFirstName("noProfile");
+        profile.setLastName("noProfile");
+        profile.setProfileImageData("");
+        return createProfile(profile);
+    }
 }
