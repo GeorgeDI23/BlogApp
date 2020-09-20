@@ -97,4 +97,10 @@ public class BlogService {
         profile.setProfileImageData("");
         return createProfile(profile);
     }
+
+    public List<String> getPopularTags() {
+        List<String> tagList = new ArrayList<>();
+        tagList = blogRepository.findPopularTags();
+        return tagList;
+    }
 }
