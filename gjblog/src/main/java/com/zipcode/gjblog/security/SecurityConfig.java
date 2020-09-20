@@ -42,11 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().csrf().disable()
                 //ToDo - Update list of non-authenticated matchers (blog/all, etc)
-                .authorizeRequests().antMatchers("/blog/authenticate","/blog/register").permitAll().
+                .authorizeRequests().antMatchers("/blog/all","/blog/tag","/blog/authenticate","/blog/register").permitAll().
                 anyRequest().authenticated().and().
                 exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS); // No state on server - send token or no access
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // Validates each time
-        // ToDo - Front end have a logout function to wipe authentication
     }
 }

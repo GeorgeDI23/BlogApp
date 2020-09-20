@@ -66,7 +66,7 @@ public class BlogController {
     @PostMapping("/authenticatedNew")
     public @ResponseBody
     ResponseEntity<Post> createBlog(@RequestBody Post request, @RequestHeader("Authorization") String authToken){
-        request.setUserName(jwtTokenUtil.extractUsername(authToken));
+        request.setUserName(jwtTokenUtil.extractUsername(authToken.substring(7)));
         Post response = null;
         try{
             logger.info("Entered into BlogController::createBlog()");
