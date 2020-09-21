@@ -99,4 +99,10 @@ public class BlogService {
         authenticationRepository.save(user);
         return user;
     }
+
+    public List<String> getPopularTags() {
+        List<String> tagList = new ArrayList<>();
+        tagList = blogRepository.findPopularTags();
+        return tagList;
+    }
 }
