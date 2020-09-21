@@ -1,7 +1,9 @@
 package com.zipcode.gjblog.blogservice;
 
+import com.zipcode.gjblog.blogmodel.AuthenticationUser;
 import com.zipcode.gjblog.blogmodel.Post;
 import com.zipcode.gjblog.blogmodel.Profile;
+import com.zipcode.gjblog.repository.AuthenticationRepository;
 import com.zipcode.gjblog.repository.BlogRepository;
 import com.zipcode.gjblog.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +20,15 @@ public class BlogService {
     BlogRepository blogRepository;
     ProfileRepository profileRepository;
     S3EngineService s3EngineService;
+    AuthenticationRepository authenticationRepository;
 
     @Autowired
-    public BlogService(BlogRepository blogRepository, S3EngineService s3EngineService,ProfileRepository profileRepository) {
+    public BlogService(BlogRepository blogRepository, S3EngineService s3EngineService,
+                       ProfileRepository profileRepository, AuthenticationRepository authenticationRepository) {
         this.blogRepository = blogRepository;
         this.s3EngineService = s3EngineService;
         this.profileRepository = profileRepository;
-
+        this.authenticationRepository = authenticationRepository;
     }
 
     public Post postBlog(Post request){
@@ -88,13 +92,11 @@ public class BlogService {
         return responseProfile;
     }
 
-    public Profile createAuthenticationProfile(String userName, String password){
-        Profile profile = new Profile();
-        profile.setUserName(userName);
-        profile.setPassword(password);
-        profile.setFirstName("noProfile");
-        profile.setLastName("noProfile");
-        profile.setProfileImageData("");
-        return createProfile(profile);
+    public AuthenticationUser createAuthenticationUser(String userName, String password){
+        AuthenticationUser user = new AuthenticationUser();
+        user.setUserName(userName);
+        user.setPassword(password);
+        authenticationRepository.save(user);
+        return user;
     }
 }

@@ -172,7 +172,7 @@ public class BlogController {
     public ResponseEntity<?> registerNewUser(@RequestBody AuthenticationRequest newAuthenticationRequest){
         try {
             String password = jwtTokenUtil.hashPassword(newAuthenticationRequest.getPassword());
-            blogService.createAuthenticationProfile(newAuthenticationRequest.getUsername(), password);
+            blogService.createAuthenticationUser(newAuthenticationRequest.getUsername(), password);
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(newAuthenticationRequest.getUsername(), newAuthenticationRequest.getPassword())
             );
