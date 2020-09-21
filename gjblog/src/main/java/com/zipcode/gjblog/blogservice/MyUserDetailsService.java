@@ -1,7 +1,7 @@
 package com.zipcode.gjblog.blogservice;
 
-import com.zipcode.gjblog.blogmodel.Profile;
-import com.zipcode.gjblog.repository.ProfileRepository;
+import com.zipcode.gjblog.blogmodel.AuthenticationUser;
+import com.zipcode.gjblog.repository.AuthenticationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,16 +14,16 @@ import java.util.ArrayList;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-    ProfileRepository profileRepository;
+    AuthenticationRepository authenticationRepository;
 
     @Autowired
-    public MyUserDetailsService(ProfileRepository profileRepository) {
-        this.profileRepository = profileRepository;
+    public MyUserDetailsService(AuthenticationRepository authenticationRepository) {
+        this.authenticationRepository = authenticationRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        Profile profile = profileRepository.findByUserName(userName);
-        return new User(userName, profile.getPassword(), new ArrayList<>());
+        AuthenticationUser user = authenticationRepository.findByUserName(userName);
+        return new User(userName, user.getPassword(), new ArrayList<>());
     }
 }
