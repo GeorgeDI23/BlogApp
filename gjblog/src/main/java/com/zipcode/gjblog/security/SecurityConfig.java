@@ -41,7 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().csrf().disable()
-                //ToDo - Update list of non-authenticated matchers (blog/all, etc)
                 .authorizeRequests().antMatchers("/blog/authenticate","/blog/register","/blog/all", "/blog/tag*", "/blog/username", "/blog/new","/blog/popular-tags").permitAll().
                 anyRequest().authenticated().and().
                 exceptionHandling().and().sessionManagement()

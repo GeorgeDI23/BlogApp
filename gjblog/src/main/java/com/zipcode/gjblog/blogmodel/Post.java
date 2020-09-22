@@ -17,6 +17,9 @@ public class Post {
     @Column(name = "user_name")
     private String userName;
 
+    @Column(name = "title")
+    private String title;
+
     @Column(name = "tag")
     private String tag;
 
@@ -46,6 +49,14 @@ public class Post {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getTag() {
