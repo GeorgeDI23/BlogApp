@@ -30,11 +30,8 @@ public class BlogService {
         this.s3EngineService = s3EngineService;
         this.profileRepository = profileRepository;
         this.authenticationRepository = authenticationRepository;
-    public BlogService(BlogRepository blogRepository, S3EngineService s3EngineService,ProfileRepository profileRepository) {
-        this.blogRepository = blogRepository;
-        this.s3EngineService = s3EngineService;
-        this.profileRepository = profileRepository;
     }
+
 
     public Post postBlog(Post request){
         if(request.getPostContent().getImageData() != ""){
