@@ -1,6 +1,5 @@
 package com.zipcode.gjblog.blogmodel;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

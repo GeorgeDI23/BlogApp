@@ -12,7 +12,7 @@ public class PostContent {
     private Long postContentId;
 
     @Column(name="text_input")
-    private String textInput;
+    private String text;
 
     @Column(name="image_key")
     private String imageKey;
@@ -29,11 +29,11 @@ public class PostContent {
     }
 
     public String getText() {
-        return textInput;
+        return text;
     }
 
     public void setText(String text) {
-        this.textInput = text;
+        this.text = text;
     }
 
     public String getImageKey() {
