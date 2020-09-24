@@ -3,6 +3,7 @@ package com.zipcode.gjblog.blogservice;
 import com.zipcode.gjblog.blogmodel.AuthenticationUser;
 import com.zipcode.gjblog.blogmodel.Post;
 import com.zipcode.gjblog.blogmodel.Profile;
+
 import com.zipcode.gjblog.repository.AuthenticationRepository;
 import com.zipcode.gjblog.repository.BlogRepository;
 import com.zipcode.gjblog.repository.ProfileRepository;
@@ -29,6 +30,10 @@ public class BlogService {
         this.s3EngineService = s3EngineService;
         this.profileRepository = profileRepository;
         this.authenticationRepository = authenticationRepository;
+    public BlogService(BlogRepository blogRepository, S3EngineService s3EngineService,ProfileRepository profileRepository) {
+        this.blogRepository = blogRepository;
+        this.s3EngineService = s3EngineService;
+        this.profileRepository = profileRepository;
     }
 
     public Post postBlog(Post request){
@@ -75,6 +80,7 @@ public class BlogService {
             String profileImageKey = createUniqueKey(profile);
             String imageData = profile.getProfileImageData().replace("data:image/jpeg;base64,","");
             s3EngineService.insertBase64IntoS3Bucket(profileImageKey, imageData);
+
             profile.setProfileImageKey(profileImageKey);
         }
         return profileRepository.save(profile);
@@ -84,13 +90,16 @@ public class BlogService {
         Profile responseProfile = null;
 
         if(username != null){
+
             responseProfile = profileRepository.findByUserName(username);
             if(responseProfile!=null && responseProfile.getProfileImageKey() != null){
+             
                 responseProfile.setProfileImageData("data:image/jpg;base64,"+s3EngineService.getS3ItemAsBase64(responseProfile.getProfileImageKey()));
             }
         }
         return responseProfile;
     }
+
 
     public AuthenticationUser createAuthenticationUser(String userName, String password){
         AuthenticationUser user = new AuthenticationUser();
@@ -105,4 +114,5 @@ public class BlogService {
         tagList = blogRepository.findPopularTags();
         return tagList;
     }
+
 }

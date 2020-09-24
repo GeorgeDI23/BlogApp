@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().csrf().disable()
                 .authorizeRequests().antMatchers("/blog/authenticate","/blog/register","/blog/all", "/blog/tag*", "/blog/username", "/blog/new","/blog/popular-tags").permitAll().
@@ -46,5 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS); // No state on server - send token or no access
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // Validates each time
+
     }
 }

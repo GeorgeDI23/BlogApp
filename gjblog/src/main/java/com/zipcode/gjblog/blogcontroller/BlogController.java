@@ -39,6 +39,9 @@ public class BlogController {
 
     private MyUserDetailsService userDetailsService;
 
+    
+
+
     @Autowired
     public BlogController(BlogService blogService, AuthenticationManager authenticationManager, JwtUtil jwtTokenUtil,
                             MyUserDetailsService userDetailsService) {
@@ -67,6 +70,7 @@ public class BlogController {
     public @ResponseBody
     ResponseEntity<Post> createBlog(@RequestBody Post request, @RequestHeader("Authorization") String authToken){
         request.setUserName(jwtTokenUtil.extractUsername(authToken.substring(7)));
+
         Post response = null;
         try{
             logger.info("Entered into BlogController::createBlog()");
@@ -205,5 +209,7 @@ public class BlogController {
             }
         }
         return new ResponseEntity<>(popularTags,HttpStatus.OK);
+
+        }
     }
 }
