@@ -194,22 +194,22 @@ public class BlogController {
 
     @GetMapping("/popular-tags")
     public @ResponseBody
-    ResponseEntity<List <String>> getPopularTags(){
+    ResponseEntity<List <String>> getPopularTags() {
         List<String> popularTags = null;
-        try{
+        try {
             logger.info("Entered into BlogController::getPopularTags()");
             popularTags = blogService.getPopularTags();
-        }catch (Exception e){
-            if(e instanceof HttpClientErrorException){
+        } catch (Exception e) {
+            if (e instanceof HttpClientErrorException) {
                 logger.error("Exception in BlogController::getPopularTags() {}", e.fillInStackTrace());
                 return new ResponseEntity(HttpStatus.BAD_REQUEST);
-            }else {
+            } else {
                 logger.error("Exception in BlogController::getPopularTags() {}", e.fillInStackTrace());
                 return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-        return new ResponseEntity<>(popularTags,HttpStatus.OK);
+        return new ResponseEntity<>(popularTags, HttpStatus.OK);
 
-        }
+
     }
 }
