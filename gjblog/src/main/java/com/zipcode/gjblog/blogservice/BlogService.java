@@ -1,7 +1,10 @@
 package com.zipcode.gjblog.blogservice;
 
+import com.zipcode.gjblog.blogmodel.AuthenticationUser;
 import com.zipcode.gjblog.blogmodel.Post;
 import com.zipcode.gjblog.blogmodel.Profile;
+
+import com.zipcode.gjblog.repository.AuthenticationRepository;
 import com.zipcode.gjblog.repository.BlogRepository;
 import com.zipcode.gjblog.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +21,19 @@ public class BlogService {
     BlogRepository blogRepository;
     ProfileRepository profileRepository;
     S3EngineService s3EngineService;
+    AuthenticationRepository authenticationRepository;
 
     @Autowired
+    public BlogService(BlogRepository blogRepository, S3EngineService s3EngineService,
+                       ProfileRepository profileRepository, AuthenticationRepository authenticationRepository) {
+        this.blogRepository = blogRepository;
+        this.s3EngineService = s3EngineService;
+        this.profileRepository = profileRepository;
+        this.authenticationRepository = authenticationRepository;
     public BlogService(BlogRepository blogRepository, S3EngineService s3EngineService,ProfileRepository profileRepository) {
         this.blogRepository = blogRepository;
         this.s3EngineService = s3EngineService;
         this.profileRepository = profileRepository;
-
     }
 
     public Post postBlog(Post request){
@@ -69,7 +78,9 @@ public class BlogService {
     public Profile createProfile(Profile profile) {
         if(profile.getProfileImageData() != ""){
             String profileImageKey = createUniqueKey(profile);
-            s3EngineService.insertBase64IntoS3Bucket(profileImageKey, profile.getProfileImageData());
+            String imageData = profile.getProfileImageData().replace("data:image/jpeg;base64,","");
+            s3EngineService.insertBase64IntoS3Bucket(profileImageKey, imageData);
+
             profile.setProfileImageKey(profileImageKey);
         }
         return profileRepository.save(profile);
@@ -79,11 +90,29 @@ public class BlogService {
         Profile responseProfile = null;
 
         if(username != null){
-             responseProfile = profileRepository.findByUserName(username);
-            if(responseProfile.getProfileImageKey() != null){
+
+            responseProfile = profileRepository.findByUserName(username);
+            if(responseProfile!=null && responseProfile.getProfileImageKey() != null){
+             
                 responseProfile.setProfileImageData("data:image/jpg;base64,"+s3EngineService.getS3ItemAsBase64(responseProfile.getProfileImageKey()));
             }
         }
         return responseProfile;
     }
+
+
+    public AuthenticationUser createAuthenticationUser(String userName, String password){
+        AuthenticationUser user = new AuthenticationUser();
+        user.setUserName(userName);
+        user.setPassword(password);
+        authenticationRepository.save(user);
+        return user;
+    }
+
+    public List<String> getPopularTags() {
+        List<String> tagList = new ArrayList<>();
+        tagList = blogRepository.findPopularTags();
+        return tagList;
+    }
+
 }
