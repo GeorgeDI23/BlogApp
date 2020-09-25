@@ -1,76 +1,20 @@
-# Micro Web Application - Server
-* **Objective** - to create an implementation of a small web service
-* **Purpose** - to demonstrate the construction of a full-stacked web-application
+# Pigeonholed Blog
+> A blog framework built on Java & Spring Boot for the back end and Angular for the front end.
+> http://gjblogfrontend.s3-website.us-east-2.amazonaws.com
 
-## Developmental Notes
-### Minimum Tech Stack
-* **Wireframe** - Mockflow
-* **Frontend** - Angular / React
-* **Business Logic** - Java
-* **Data Layer** - MySQL
-* **Cloud** - Heroku/AWS/Google
+## Usage
+* Default home page shows you all the blog posts
+* To the left is a list of tags you can click to get only the blog posts tagged as such
+* At the top are buttons to take you to various end points of activity
+	* “New Blog Post” will allow you to create a new blog post
+		* If you are not currently logged in, blog posts will be authored by anonymous
+	* “Login” will let you log in if you are currently a registered user
+	* “Profile” will let you view your profile, or create it if it does not yet exist
+	* “Register New User” will allow you to create a new user login 
+	* “Logout” will log you out
 
-### Installation
-
-Use Spring Initializr to create an starting point for you application
-
-
-
-
-
-
-
-
-## Project Topics
-
-### TCP Application
-
-#### User Stories to Fulfill  
-* As a client, (not logged in) I
-    * can send messages to a _peer_.
-	* can view default channels
-	* can view all accessible channels
-	* can view messages live as they are received
-
-<hr>
-
-
-
-
-
-### Blog Application
-
-#### User Stories to Fulfill  
-* As a client, (not logged in) I
-    * can create new blog posts
-        * A blog post can consist of images and text
-	* can view list of all blog posts
-    * can view blog posts filtered by blog-tag
-	* can view new blog posts upon refreshing the DOM
-
-<hr>
-
-
-
-
-
-### Video Library Application
-
-#### User Stories to Fulfill  
-* As a client, (not logged in) I
-    * can upload new videos
-	* can view list of all videos
-	* can post simple text-comments on a video
-
-
-
-
-
-### Money Management Application
-
-#### User Stories to Fulfill  
-* As a client, (not logged in) I
-	* can create new accounts
-	* deposit money to each account
-	* withdraw money from each account
-	* transfer money to and from any 2 accounts
+## Stack
+* Backend - Java/Spring Boot
+* Frontend - Angular
+* Data Layer - MySQL
+* Cloud - AWS (EBS, S3)
