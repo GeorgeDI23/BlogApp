@@ -1,6 +1,7 @@
 # Pigeonholed Blog
 > A blog framework built on Java & Spring Boot for the back end and Angular for the front end.
-> http://gjblogfrontend.s3-website.us-east-2.amazonaws.com
+> 
+> See the project live: http://pigeonholed.s3-website.us-east-2.amazonaws.com/home
 
 ## Usage
 * Default home page shows you all the blog posts
