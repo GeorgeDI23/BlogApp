@@ -1,0 +1,31 @@
+<div class="login">
+<h3>Input Your Login Information Below</h3>
+
+<form [formGroup]="loginForm" (ngSubmit)="onClickSubmit()">
+    <div><label>
+      UserName:
+      <input type="text" formControlName="userName" required>
+    </label></div>
+    <div><label>
+      Password:
+      <input type="password" formControlName="password" required>
+    </label></div>
+    <button class="button" type="submit">Login</button>
+</form>
+
+<div *ngIf="userName.invalid && (userName.dirty || userName.touched)"
+    class="alert alert-danger">
+
+  <div *ngIf="userName.errors.required">
+    Username is required.
+  </div>
+</div>
+
+<div *ngIf="password.invalid && (password.dirty || password.touched)"
+    class="alert alert-danger">
+
+  <div *ngIf="password.errors.required">
+    Password is required.
+  </div>
+</div>
+</div>

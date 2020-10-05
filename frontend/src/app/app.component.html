@@ -1,0 +1,30 @@
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+  <div class="pigeon"></div>
+  <span>Pigeonholed</span>
+  <div class="spacer"></div>
+  <span class="subtitle"> a blog born from trial and error</span>
+</div>
+<div class="subtoolbar"></div>
+<div class="navbar">
+<nav>
+  <a routerLink="/home">Home</a>
+  <a routerLink="/newpost">New Blog Post</a>
+  <a routerLink="/login">Login</a>
+  <a routerLink="/profile">Profile</a>
+  <a routerLink="/register">Register New User</a>
+  <a role="button" (click)="logout()">Logout</a>
+</nav>
+</div>
+<div class="content" role="main">
+
+    <router-outlet></router-outlet>
+
+</div>
+<footer>
+  <div class="spacer"></div>
+  <h4>Checkout The Github Page:&nbsp;&nbsp;</h4>
+  <a class="link" href="https://github.com/GeorgeDI23/BlogApp">GitHub&nbsp;&nbsp;</a>
+</footer>
+
+

@@ -1,0 +1,161 @@
+:host {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 8px 0;
+}
+
+p {
+  margin: 0;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.pigeon{
+  background-image: url(../assets/pigeonCrop.png);
+  width:75px;
+  height: 35px;
+  padding: 0px 10px 0px -20px;
+}
+
+.subtitle{
+  font-size:20px;
+
+}
+
+.toolbar {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  min-width: 830px;
+  display: flex;
+  align-items: center;
+  background-image: linear-gradient(#196ABB, #437db8);
+  color: #FCF8E7;
+  font-weight: 900;
+  font-size: 40px;
+  padding:0 10px;
+  box-shadow: 0 1px 1px rgba(44, 42, 150, 0.486),
+  0 2px 2px rgba(0,0,0,0.15),
+  0 3px 3px rgba(0,0,0,0.15),
+  0 4px 4px rgba(0,0,0,0.15);
+}
+
+.toolbar img {
+  margin: 0 16px;
+}
+
+.subtoolbar{
+  left:0;
+  position: sticky;
+  background-image: linear-gradient(#196ABB, #437db8);
+  display: flex;
+  margin-top: 60px;
+  height: 37px;
+  width: 100%;
+  min-width: 830px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.15),
+              0 2px 2px rgba(0,0,0,0.15),
+              0 3px 3px rgba(0,0,0,0.15),
+              0 5px 5px rgba(0,0,0,0.15);
+}
+
+.content {
+  display: flex;
+  margin: -70px auto 32px;
+  max-width: 960px;
+  flex-direction: column;
+  align-items: center;
+}
+
+svg.material-icons {
+  height: 24px;
+  width: auto;
+}
+
+svg.material-icons:not(:last-child) {
+  margin-right: 8px;
+}
+
+a,
+a:visited,
+a:hover {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #125699;
+}
+
+footer {
+  margin-top: 8px;
+  display: flex;
+  align-items: right;
+  line-height: 50px;
+  color:#FCF8E7;
+  background-image: linear-gradient(#196ABB, #0b3866);
+}
+
+.pigeontracks{
+  background-image: url(../assets/track.png);
+  width:150px;
+  height: 35px;
+  padding: 0px 10px 0px -20px;
+}
+
+footer a.link{
+  color:#FCF8E7;
+  margin: 8px 0;
+  font-style: italic;
+}
+
+.navbar{
+  position:sticky;
+  min-width: 830px;
+  margin-top:-40px;
+  margin-bottom: 40px;
+  margin-left: 10px;
+}
+
+a[role='button']{
+  color: #334953;
+  text-decoration: none;
+  cursor:pointer;
+}
+
+nav a {
+padding: 5px 30px;
+text-decoration: none;
+margin-top: 10px;
+margin-right: 7px;
+display: inline-block;
+background-color: #eee;
+border-radius: 4px;
+}
+nav a:visited, a:link{
+color: #334953;
+}
+nav a:hover {
+color: #039be5;
+background-color: #cfd8dc;
+}
+nav a.active {
+color: #039be5;
+}

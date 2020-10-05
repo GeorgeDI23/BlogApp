@@ -1,0 +1,12 @@
+<div class="newpost">
+<h2>Input Your New Post Information Below</h2>
+
+<form >
+  <p>Title:<input [(ngModel)]="post.title" name="title" type="text" id="title"></p>
+  <p>Username:<input [(ngModel)]="post.userName" name="userName" type ="text" id="postUsername"></p>
+  <p>Tag:<input [(ngModel)]="post.tag" name="tag" type ="text" id="postTag"></p>
+  <p>Post Content (Markdown or Text):<textarea [(ngModel)]="post.postContent.text" name="text" type ="text" id="postText"></textarea></p>
+  <p>Image:<input #imageInput type="file" accept="image/*"name="image" id="image" (change)="onFileChanged($event)"/></p>
+</form>
+<button (click)="onClickSubmit()">Submit New Post</button>
+</div>

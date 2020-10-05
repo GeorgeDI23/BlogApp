@@ -1,0 +1,51 @@
+<div class="register">
+<h3>Input Your Login Information Below</h3>
+
+<form [formGroup]="loginForm" (ngSubmit)="onClickSubmit()">
+    <div><label>
+      UserName:
+      <input type="text" formControlName="userName" required>
+    </label></div>
+    <div><label>
+      Password:
+      <input type="password" formControlName="password1" required>
+    </label></div>
+    <div><label>
+      Enter Password Again:
+      <input type="password" formControlName="password2" required>
+    </label></div>
+    <button class="button" type="submit">Create Login</button>
+</form>
+
+<div *ngIf="userName.invalid && (userName.dirty || userName.touched)"
+    class="alert alert-danger">
+
+  <div *ngIf="userName.errors.required">
+    Username is required.
+  </div>
+</div>
+
+<div *ngIf="password1.invalid && (password1.dirty || password1.touched)"
+    class="alert alert-danger">
+
+  <div *ngIf="password1.errors.required">
+    Password is required.
+  </div>
+</div>
+
+<div *ngIf="password2.invalid && (password2.dirty || password2.touched)"
+    class="alert alert-danger">
+
+  <div *ngIf="password2.errors.required">
+    Please enter password again for validation.
+  </div>
+</div>
+
+<div *ngIf="this.loginForm.invalid && (this.loginForm.dirty || this.loginForm.touched)"
+    class="alert alert-danger">
+
+  <div *ngIf="this.loginForm.errors.invalidPasswords">
+    Passwords do not match. Please try again.
+  </div>
+</div>
+</div>

@@ -1,0 +1,8 @@
+<h2>Tags</h2>
+<ul class = "tags">
+  <li *ngFor = "let tag of tags"
+  [class.selected]="tag === selectedTag"
+  (click)="onSelect(tag)">
+    {{tag}}
+  </li>
+</ul>

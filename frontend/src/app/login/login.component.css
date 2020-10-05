@@ -1,0 +1,21 @@
+.login{
+  margin-top: 60px;
+}
+input{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+input[type=text]:focus {
+  border: .75px solid #555;
+}
+
+button {
+  border: none;
+  padding: 8px 16px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}

@@ -1,0 +1,40 @@
+.container{
+  margin-top:60px;
+}
+.posttags {
+  /* margin: 0 0 2em 0; */
+  list-style-type: none;
+  padding: 0;
+  width: 50em;
+  border-width: 7px;
+  border-style: solid;
+  border-color: #1C6EA4;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+  margin-left: auto;
+  margin-right: auto;
+}
+.posttags li {
+  position: relative;
+  /*background-color: #EEE;*/
+  margin: .5em;
+  padding: .3em 0;
+  /*height: 1.6em;
+  //border-radius: 4px;*/
+  border-width: 5px;
+  border-style: ridge;
+  border-color: #1C6EA4;
+}
+.card {
+padding-top: 10px;
+padding-right: 20px;
+padding-bottom: 10px;
+padding-left: 20px;
+}
+img {
+  width: auto;
+  height: auto;
+  padding-right: 20px;
+  padding-left: 20px;
+  border-radius: 50%;
+}

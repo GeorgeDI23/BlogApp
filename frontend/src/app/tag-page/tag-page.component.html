@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6">
+      <ul class="posttags">
+        <li *ngFor = "let post of postFromTag">
+
+              <div class="card">
+                <h2>{{post.title}}</h2>
+                <h5>
+                    by user {{post.userName}}
+                    <span style="float:right;">
+                        tagged: {{post.tag}}
+                    </span>
+                </h5>
+                <div  style="text-align:center;">
+                    <img src={{post.postContent.imageData}}>
+                </div>
+                <div [innerHTML]="post.postContent.text | markdownTranslater"></div>
+              </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+

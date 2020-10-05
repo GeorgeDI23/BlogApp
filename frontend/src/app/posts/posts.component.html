@@ -1,0 +1,17 @@
+<ul class="posts">
+    <li *ngFor="let entry of post.slice().reverse()">
+        <div class="card">
+            <h2>{{entry.title}}</h2>
+            <h5>
+                by user {{entry.userName}}
+                <span style="float:right;">
+                    tagged: {{entry.tag}}
+                </span>
+            </h5>
+            <div  style="text-align:center;">
+                <img src={{entry.postContent.imageData}}>
+            </div>
+            <div [innerHTML]="entry.postContent.text | markdownTranslater"></div>
+          </div>
+      </li>
+  </ul>
