@@ -12,7 +12,7 @@
 	* “Login” will let you log in if you are currently a registered user
 	* “Profile” will let you view your profile, or create it if it does not yet exist
 	* “Register New User” will allow you to create a new user login 
-	* “Logout” will log you out
+	* “Logout” will log you out and redirect you to the home page
 
 ## Stack
 * Backend - Java/Spring Boot
